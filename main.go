@@ -42,5 +42,6 @@ func main() {
 
 	database.GetDBConnection()
 	server.GetServerConnection()
+	fmt.Println("at port 8000")
 
 }
