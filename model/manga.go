@@ -17,7 +17,7 @@ type Manga struct {
 	Cover   string `json:"cover"`
 	Website string `json:"website"`
 	Chapter int    `json:"chapter"`
-	IdManga string `json:"id"`
+	IdManga string `json:"id_manga"`
 }
 
 var MangaList []Manga
@@ -30,7 +30,7 @@ func GetMangas(w http.ResponseWriter, r *http.Request) {
 func GetManga(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r) //Get parameters
-	//Loop through carts and find with Id
+	//Loop through mangas and find with Id
 	for _, item := range MangaList {
 		if item.IdManga == params["id"] {
 			json.NewEncoder(w).Encode(item)
