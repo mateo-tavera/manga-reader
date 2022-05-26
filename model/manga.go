@@ -40,16 +40,31 @@ func GetManga(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Manga{})
 }
 
+func GetMangaId(mangas []Manga) string {
+	if len(mangas) == 0 {
+		return "1"
+	}
+	neoID, _ := strconv.Atoi(mangas[len(mangas)-1].IdManga)
+	return strconv.Itoa(neoID + 1)
+
+}
+
 func CreateManga(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	currentUserId := params["userid"]
 	var manga Manga
 	_ = json.NewDecoder(r.Body).Decode(&manga)
-	neoID, _ := strconv.Atoi(MangaList[len(MangaList)-1].IdManga)
-	manga.IdManga = strconv.Itoa(neoID + 1)
+	manga.IdManga = GetMangaId(MangaList)
 
-	MangaList = append(MangaList, manga)
+	if currentUserId == params["userid"] {
+		MangaList = append(MangaList, manga)
+	} else {
+		MangaList = nil
+	}
+
 	json.NewEncoder(w).Encode(manga)
-	fmt.Printf("manga %v added\n", neoID+1)
+	fmt.Printf("manga %v added\n", manga.IdManga)
 
 	//Get db
 	Db, err := database.GetDBConnection()

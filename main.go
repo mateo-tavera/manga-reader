@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/mateo-tavera/manga/database"
-	"github.com/mateo-tavera/manga/model"
 	"github.com/mateo-tavera/manga/server"
+	//"github.com/mateo-tavera/manga/model"
 )
 
 func main() {
@@ -25,21 +25,35 @@ func main() {
 		log.Fatal("Cannot execute query:", err)
 	}
 
-	//Data to create a cart manually
-	model.MangaList = append(model.MangaList, model.Manga{
-		Title:   "Boku No Hero",
-		Cover:   "cover",
-		Website: "website",
-		Chapter: 5,
-		IdManga: "1"})
+	prueba := []string{}
 
-	model.MangaList = append(model.MangaList, model.Manga{
-		Title:   "One Punch Man",
-		Cover:   "cover",
-		Website: "website",
-		Chapter: 1,
-		IdManga: "2"})
+	fmt.Println(len(prueba))
+	//Data to create a manga manually
+	/*
+		model.MangaList = append(model.MangaList, model.Manga{
+			Title:   "Boku No Hero",
+			Cover:   "cover",
+			Website: "website",
+			Chapter: 5,
+			IdManga: "1"})
 
+		model.MangaList = append(model.MangaList, model.Manga{
+			Title:   "One Punch Man",
+			Cover:   "cover",
+			Website: "website",
+			Chapter: 1,
+			IdManga: "2"})
+	*/
+
+	//Data to create a user manually
+	/*
+		model.UserList = append(model.UserList, model.User{
+			IdUser:       "1",
+			FirstName:    "Pablo",
+			LastName:     "Bernal",
+			ListOfMangas: nil})
+
+	*/
 	database.GetDBConnection()
 	server.GetServerConnection()
 

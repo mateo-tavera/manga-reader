@@ -28,7 +28,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r) //Get parameters
 	//Loop through users and find with Id
 	for _, item := range UserList {
-		if item.IdUser == params["uid"] {
+		if item.IdUser == params["userid"] {
 			json.NewEncoder(w).Encode(item)
 			return
 		}
@@ -36,16 +36,29 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&User{})
 }
 
+func GetUserId(users []User) string {
+	if len(users) == 0 {
+		return "1"
+	}
+	neoID, _ := strconv.Atoi(users[len(users)-1].IdUser)
+	return strconv.Itoa(neoID + 1)
+
+}
+
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	//Create user and set the correct Id
 	var user User
 	_ = json.NewDecoder(r.Body).Decode(&user)
-	neoID, _ := strconv.Atoi(UserList[len(UserList)-1].IdUser)
-	user.IdUser = strconv.Itoa(neoID + 1)
+	user.IdUser = GetUserId(UserList)
+
+	user.ListOfMangas = MangaList
+	MangaList = nil //reset mangas
 
 	UserList = append(UserList, user)
 	json.NewEncoder(w).Encode(user)
-	fmt.Printf("user %v added\n", neoID+1)
+	fmt.Printf("user %v added\n", user.IdUser)
+
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
