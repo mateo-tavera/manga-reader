@@ -15,9 +15,9 @@ func GetServerConnection() {
 
 	//Route handlers / Endpoints
 	//User routes
-	r.HandleFunc("/api/users/", model.GetUsers).Methods("GET")
+	r.HandleFunc("/api/users", model.GetUsers).Methods("GET")
 	r.HandleFunc("/api/user/{userid}", model.GetUser).Methods("GET")
-	r.HandleFunc("/api/users/", model.CreateUser).Methods("POST")
+	r.HandleFunc("/api/users", model.CreateUser).Methods("POST")
 	r.HandleFunc("/api/users/{userid}", model.UpdateUser).Methods("PUT")
 	r.HandleFunc("/api/users/{userid}", model.DeleteUser).Methods("DELETE")
 	//Manga routes
